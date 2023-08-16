@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+        <title>Expense Tracker</title>
+
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <script src="index.js" defer></script>
+    </head>
+    <body>
+        <main id="main-container">
+            <h1>Expense Tracker</h1>
+            <button type="button" id="toggle-dark-mode-button">Toggle dark mode</button>
+            <div class="actions">
+                <button id="add-expense-button" onclick="openAddExpenseModal()">Add Expense</button>
+                <form id="filter-form">
+                    <label class="filter-label">
+                        Select Month:
+                        <select id="select-month">
+                            <option value="ALL" selected>ALL</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </label>
+                    <label class="filter-label">
+                        Select Category:
+                        <select id="select-category">
+                            <option value="ALL" selected>ALL</option>
+                            <option value="Food & Beverage">Food & Beverage</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Utilities">Utilities</option>
+                        </select>
+                    </label>
+                    <label class="date-range-label">
+                        Select Date Range:
+                        <br>
+                        <input type="date" class="date-range" id="date-range-from">
+                        to
+                        <input type="date" class="date-range" id="date-range-to">
+                    </label>
+                    <button type="reset" id="clear-filters-button">Clear Filters</button>
+                </form>
+            </div>
+
+            <div id="add-expense-modal" class="modal">
+                <div id="add-modal-content" class="modal-content">
+                    <div id="add-modal-header" class="modal-header">
+                        <h2>Add Expense</h2>
+                        <span class="close" onclick="closeAddExpenseModal()">&times;</span>
+                    </div>
+
+                    <form id="add-expense-form">
+                        <div class="modal-fields">
+                            <label for="item">Item:</label>
+                            <input type="text" id="item" name="item">
+                        </div>
+
+                        <div class="modal-fields">
+                            <label for="date">Date:</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+
+                        <div class="modal-fields">
+                            <label for="category">Category:</label>
+                            <select id="category" name="category">
+                                <option value="Food & Beverage">Food & Beverage</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Utilities">Utilities</option>
+                            </select>
+                        </div>
+
+                        <div class="modal-fields">
+                            <label for="cost">Cost:</label>
+                            <input type="number" id="cost" name="cost">
+                        </div>
+
+                        <button id="confirm-add-expense-button" class="modal-confirm-button" type="button">Add</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="edit-expense-modal" class="modal">
+                <div id="edit-modal-content" class="modal-content">
+                    <div id="modal-header" class="modal-header">
+                        <h2>Edit Expense</h2>
+                        <span class="close" onclick="closeEditExpenseModal()">&times;</span>
+                    </div>
+
+                    <form id="edit-expense-form" data-row-index="">
+                        <div class="modal-fields">
+                            <label for="edit-item">Item:</label>
+                            <input type="text" id="edit-item" name="item">
+                        </div>
+
+                        <div class="modal-fields">
+                            <label for="edit-date">Date:</label>
+                            <input type="date" id="edit-date" name="date">
+                        </div>
+
+                        <div class="modal-fields">
+                            <label for="edit-category">Category:</label>
+                            <select id="edit-category" name="category">
+                                <option value="Food & Beverage">Food & Beverage</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Utilities">Utilities</option>
+                            </select>
+                        </div>
+
+                        <div class="modal-fields">
+                            <label for="edit-cost">Cost:</label>
+                            <input type="number" id="edit-cost" name="cost">
+                        </div>
+
+                        <button id="confirm-edit-expense-button" class="modal-confirm-button" type="button">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <table id="expenses-table" class="sortable">
+                <thead>
+                    <tr>
+                        <th data-sort="">
+                            Item
+                            <span class="material-icons sort-icons descending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_down</span>
+                            <span class="material-icons sort-icons ascending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_up</span>
+                        </th>
+                        <th data-sort="">
+                            Date
+                            <span class="material-icons sort-icons descending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_down</span>
+                            <span class="material-icons sort-icons ascending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_up</span>
+                        </th>
+                        <th data-sort="">
+                            Category
+                            <span class="material-icons sort-icons descending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_down</span>
+                            <span class="material-icons sort-icons ascending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_up</span>
+                        </th>
+                        <th data-sort="">
+                            Cost
+                            <span class="material-icons sort-icons descending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_down</span>
+                            <span class="material-icons sort-icons ascending" style="font-size: inherit; visibility: hidden; position: absolute; right: 0;">arrow_drop_up</span>
+                        </th>
+                        <th class="actions-column">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Total</td>
+                        <td id="total-expense-cell">$0.00</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </main>
+    </body>
+</html>

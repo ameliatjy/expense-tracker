@@ -41,15 +41,33 @@ function deleteRow(e) {
         const rowIndex = e.target.parentNode.parentNode.rowIndex;
         document.getElementById("expenses-table").deleteRow(rowIndex);
         updateTotal();
+
+        // delete from localStorage
+        const key = e.target.parentNode.parentElement.dataset.key;
+        localStorage.removeItem(key);
+
+        // delete key from allKeys
+        const allKeys = localStorage.getItem("allKeys");
+        if (allKeys === null) {
+            return;
+        }
+        let allKeysArray = JSON.parse(allKeys);
+        const keyIdx = allKeysArray.indexOf(key);
+        if (keyIdx === -1) {
+            return;
+        }
+        allKeysArray.splice(keyIdx, 1);
+        localStorage.setItem("allKeys", JSON.stringify(allKeysArray));
     }
 }
 
 function editRow(e) {
     openEditExpenseModal()
     const form = document.getElementById("edit-expense-form");
-    form.dataset.rowIndex = e.target.parentNode.parentNode.rowIndex;
+    const rowNode = e.target.parentNode.parentNode;
+    form.dataset.rowIndex = rowNode.rowIndex;
 
-    const rowCells = e.target.parentNode.parentNode.cells;
+    const rowCells = rowNode.cells;
     // set default values of edit expense modal to original values
     document.getElementById("edit-item").value = rowCells[0].textContent;
     document.getElementById("edit-date").value = rowCells[1].textContent;
@@ -57,49 +75,9 @@ function editRow(e) {
     document.getElementById("edit-cost").value = rowCells[3].textContent.substring(1);
 }
 
-// when expense is edited
-document.getElementById("confirm-edit-expense-button").addEventListener("click", e => {
-    const item = document.getElementById("edit-item").value;
-    const date = document.getElementById("edit-date").value;
-    const category = document.getElementById("edit-category").value;
-    const cost = document.getElementById("edit-cost").value;
-    if (item === "" || date === "" || cost === "") {
-        alert("All fields are required!")
-        return;
-    }
-
-    const rowIndex = document.getElementById("edit-expense-form").dataset.rowIndex;
-    const table = document.getElementById("expenses-table").getElementsByTagName("tbody");
-    const rowCells = table[0].rows[rowIndex-1].cells;
-    rowCells[0].textContent = item
-    rowCells[1].textContent = date;
-    rowCells[2].textContent = category;
-    rowCells[3].textContent = `$${Number(cost).toFixed(2)}`
-
-    updateTotal();
-
-    // after editing, remove sort icons
-    const sortIcons = document.getElementsByClassName("sort-icons");
-    for (let icon of sortIcons) {
-        icon.style.visibility = "hidden";
-    }
-
-    closeEditExpenseModal()
-})
-
-// when new expense is added
-document.getElementById("confirm-add-expense-button").addEventListener("click", e => {
-    const item = document.getElementById("item").value;
-    const date = document.getElementById("date").value;
-    const category = document.getElementById("category").value;
-    const cost = document.getElementById("cost").value;
-    if (item === "" || date === "" || cost === "") {
-        alert("All fields are required!")
-        return;
-    }
-
-    const table = document.getElementById("expenses-table").getElementsByTagName("tbody");
+function addExpenseRowToTable(table, key, item, date, category, cost) {
     const newRow = table[0].insertRow();
+    newRow.dataset.key = key; // set data-key of html row
 
     const itemCell = newRow.insertCell(0);
     const itemText = document.createTextNode(item);
@@ -125,6 +103,57 @@ document.getElementById("confirm-add-expense-button").addEventListener("click", 
     editImg.src = "edit_black_18dp.svg";
     editImg.onclick = e => editRow(e);
     actionsCell.append(deleteImg, editImg);
+}
+
+// when expense is edited
+document.getElementById("confirm-edit-expense-button").addEventListener("click", e => {
+    const item = document.getElementById("edit-item").value;
+    const date = document.getElementById("edit-date").value;
+    const category = document.getElementById("edit-category").value;
+    const cost = document.getElementById("edit-cost").value;
+    if (item === "" || date === "" || cost === "") {
+        alert("All fields are required!")
+        return;
+    }
+
+    const rowIndex = document.getElementById("edit-expense-form").dataset.rowIndex;
+    const table = document.getElementById("expenses-table").getElementsByTagName("tbody");
+    const tableRow = table[0].rows[rowIndex-1];
+    const rowCells = tableRow.cells;
+    rowCells[0].textContent = item
+    rowCells[1].textContent = date;
+    rowCells[2].textContent = category;
+    rowCells[3].textContent = `$${Number(cost).toFixed(2)}`
+
+    updateTotal();
+
+    // after editing, remove sort icons
+    const sortIcons = document.getElementsByClassName("sort-icons");
+    for (let icon of sortIcons) {
+        icon.style.visibility = "hidden";
+    }
+
+    closeEditExpenseModal();
+
+    // edit localStorage
+    const key = tableRow.dataset.key;
+    localStorage.setItem(key, JSON.stringify({ key, item, date, category, cost}));
+})
+
+// when new expense is added
+document.getElementById("confirm-add-expense-button").addEventListener("click", e => {
+    const item = document.getElementById("item").value;
+    const date = document.getElementById("date").value;
+    const category = document.getElementById("category").value;
+    const cost = document.getElementById("cost").value;
+    if (item === "" || date === "" || cost === "") {
+        alert("All fields are required!")
+        return;
+    }
+
+    const table = document.getElementById("expenses-table").getElementsByTagName("tbody");
+    const key = Date.now().toString(); // unique key for expense item
+    addExpenseRowToTable(table, key, item, date, category, cost);
 
     updateTotal();
 
@@ -138,6 +167,20 @@ document.getElementById("confirm-add-expense-button").addEventListener("click", 
     }
 
     closeAddExpenseModal();
+
+    // add expense to localStorage
+    localStorage.setItem(key, JSON.stringify({ key, item, date, category, cost }));
+
+    // append key to allKeys
+    const allKeys = localStorage.getItem("allKeys");
+    let allKeysArray;
+    if (allKeys === null) { // no entries exist
+        allKeysArray = [];
+    } else {
+        allKeysArray = JSON.parse(allKeys);
+    }
+    allKeysArray.push(key);
+    localStorage.setItem("allKeys", JSON.stringify(allKeysArray));
 })
 
 // filters
@@ -286,4 +329,23 @@ document.getElementById("toggle-dark-mode-button").addEventListener("click", e =
             img.style.filter = "invert(100%)"; // change to white
         }
     })
+})
+
+// populate data from localStorage
+document.addEventListener("DOMContentLoaded", e => {
+    const allKeys = localStorage.getItem("allKeys");
+    if (allKeys === null) {
+        return;
+    }
+    const allKeysArr = JSON.parse(allKeys);
+
+    const table = document.getElementById("expenses-table").getElementsByTagName("tbody");
+
+    // add expenses from localStorage to table
+    for (const key of allKeysArr) {
+        const { item, date, category, cost } = JSON.parse(localStorage.getItem(key));
+        addExpenseRowToTable(table, key, item, date, category, cost)
+    }
+
+    updateTotal();
 })

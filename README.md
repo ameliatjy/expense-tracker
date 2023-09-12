@@ -1,50 +1,70 @@
-# expense-tracker
-A simple expense tracker application built using HTML, CSS, and JavaScript to easily keep track of your expenses.
+# Getting Started with Create React App
 
-![landing page](./screenshots/landing.png)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Features
-1. [Add New Expense](#1-add-new-expense)
-2. [Edit/Delete Existing Expense](#2-editdelete-existing-expense)
-3. [Filter Expenses](#3-filter-expenses)
-4. [Sort Columns](#4-sort-columns)
-5. [Light/Dark Mode](#5-lightdark-mode)
+## Available Scripts
 
-### 1. Add New Expense
-Feature to add a new expense, specifying the item, date, category, and cost.
-<figure>
-    <img src="./screenshots/add.png" alt="Add New Expense">
-    <figcaption style="text-align:center"><i>Fig 1. Add a new expense</i></figcaption>
-</figure>
+In the project directory, you can run:
 
-### 2. Edit/Delete Existing Expense
-Feature to edit or delete an existing expense.
-<figure>
-    <img src="./screenshots/edit.png" alt="Edit Existing Expense">
-    <figcaption style="text-align:center"><i>Fig 2. Edit an existing expense</i></figcaption>
-</figure>
-<figure>
-    <img src="./screenshots/delete.png" alt="Delete Existing Expense">
-    <figcaption style="text-align:center"><i>Fig 3. Delete an existing expense</i></figcaption>
-</figure>
+### `npm start`
 
-### 3. Filter Expenses
-Feature to filter the expenses table by month, category, and/or date range.
-<figure>
-    <img src="./screenshots/filter.png" alt="Filter Expenses">
-    <figcaption style="text-align:center"><i>Fig 4. Filter expenses table by category: Food & Beverage</i></figcaption>
-</figure>
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### 4. Sort Columns
-Feature to sort the expenses table by any column ascending or descending.
-<figure>
-    <img src="./screenshots/sort.png" alt="Sort Columns">
-    <figcaption style="text-align:center"><i>Fig 5. Sort expenses table by ascending cost</i></figcaption>
-</figure>
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-### 5. Light/Dark Mode
-Feature to toggle dark mode.
-<figure>
-    <img src="./screenshots/dark.png" alt="Dark Mode">
-    <figcaption style="text-align:center"><i>Fig 6. Toggle dark mode</i></figcaption>
-</figure>
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

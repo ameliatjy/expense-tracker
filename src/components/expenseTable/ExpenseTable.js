@@ -34,7 +34,7 @@ function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
   const [isDarkMode, ] = useDarkMode()
 
   const shouldDisplayRow = row => {
-    if (filter.month && filter.month !== row.date.toLocaleString('default', { month: 'long' })) {
+    if (filter.month && filter.month !== new Date(row.date).toLocaleString('default', { month: 'long' })) {
       return false
     }
     if (filter.category && filter.category !== row.category) {

@@ -40,6 +40,7 @@ let ExpenseTable = ({ data, dispatch, filter, openEditModal }) => {
           const lowerCaseLabel = label.toLowerCase()
           return (
             <ExpenseTableHeaderCell
+              key={label}
               label={label}
               attribute={lowerCaseLabel}
               dispatch={dispatch}

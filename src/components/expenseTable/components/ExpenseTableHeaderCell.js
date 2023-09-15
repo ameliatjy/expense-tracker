@@ -3,7 +3,7 @@ import ArrowDownIcon from "../../../assets/ArrowDownIcon";
 import {memo, useState} from "react";
 import {TABLE_LABELS} from "../constants";
 
-let ExpenseTableHeader = ({ label, attribute, data, setData, onClick, sortedColumn }) => {
+let ExpenseTableHeaderCell = ({ label, attribute, data, setData, onClick, sortedColumn }) => {
   const [isAscending, setIsAscending] = useState(null)
   console.log("rerender expensetableheader")
 
@@ -48,5 +48,5 @@ let ExpenseTableHeader = ({ label, attribute, data, setData, onClick, sortedColu
     </th>
   )
 }
-ExpenseTableHeader = memo(ExpenseTableHeader)
-export default ExpenseTableHeader
+ExpenseTableHeaderCell = memo(ExpenseTableHeaderCell)
+export default ExpenseTableHeaderCell

@@ -2,7 +2,7 @@ import "../../styles/styles.css"
 import {memo, useEffect, useState} from "react";
 import useDarkMode from "../../hooks/useDarkMode";
 import ExpenseRow from "./components/ExpenseRow";
-import ExpenseTableHeader from "./components/ExpenseTableHeader";
+import ExpenseTableHeaderCell from "./components/ExpenseTableHeaderCell";
 import useSortedColumn from "../../hooks/useSortedColumn";
 import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
 
@@ -53,7 +53,7 @@ function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
         {TABLE_HEADERS.map(label => {
           const lowerCaseLabel = label.toLowerCase()
           return (
-            <ExpenseTableHeader
+            <ExpenseTableHeaderCell
               label={label}
               attribute={lowerCaseLabel}
               data={data}

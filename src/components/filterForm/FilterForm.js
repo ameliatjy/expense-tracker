@@ -9,17 +9,21 @@ import {LABELS} from "../../constants/labels";
 import {MONTHS} from "./constants/months";
 import {CATEGORIES} from "../../constants/categories";
 import {FORM_LABELS} from "./constants/labels";
+import {HOME_PAGE_ACTION_TYPES} from "../../pages/home/constants";
 import "../../styles/styles.css"
 
-let FilterForm = ({ filter, setFilter }) => {
+let FilterForm = ({ filter, dispatch }) => {
   console.log("rerender filterform")
   const onChange = (event, fieldName, defaultValue) => {
     if (event.target.value !== defaultValue) {
-      setFilter(f => ({...f, [fieldName]: event.target.value}))
+      dispatch({
+        type: HOME_PAGE_ACTION_TYPES.ADD_FILTER,
+        filter: { [fieldName]: event.target.value }
+      })
     } else {
-      setFilter(f => {
-        const { [fieldName]: a, ...others } = f
-        return others
+      dispatch({
+        type: HOME_PAGE_ACTION_TYPES.REMOVE_FILTER,
+        fieldName: fieldName
       })
     }
   }
@@ -44,7 +48,7 @@ let FilterForm = ({ filter, setFilter }) => {
         className={"clear-filters-button " + (Object.keys(filter).length === 0 ? "" : "visible")}
         type={"reset"}
         label={BUTTON_LABELS.CLEAR_FILTERS}
-        onClick={() => setFilter({})}
+        onClick={() => dispatch({ type: HOME_PAGE_ACTION_TYPES.RESET_FILTER })}
       />
     </form>
   )

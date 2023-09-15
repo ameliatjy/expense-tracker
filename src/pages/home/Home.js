@@ -1,26 +1,25 @@
-import {useEffect, useState} from "react";
+import {memo, useEffect} from "react";
 
-import Button from "../components/button";
-import FilterForm from "../components/filterForm";
-import ExpenseTable from "../components/expenseTable";
-import Modal from "../components/modal";
+import Button from "../../components/button";
+import FilterForm from "../../components/filterForm";
+import ExpenseTable from "../../components/expenseTable";
+import Modal from "../../components/modal";
 
-import useDarkMode from "../hooks/useDarkMode";
-import useExpenseKeys from "../hooks/useExpenseKeys";
-import useSortedColumn from "../hooks/useSortedColumn";
+import useDarkMode from "../../hooks/useDarkMode";
+import useExpenseKeys from "../../hooks/useExpenseKeys";
+import useSortedColumn from "../../hooks/useSortedColumn";
+import useHomePageState from "../../hooks/useHomePageState";
 
-import {BUTTON_LABELS} from "../components/button/constants";
-import {LABELS} from "../constants/labels";
-import "../styles/styles.css"
+import {BUTTON_LABELS} from "../../components/button/constants";
+import {LABELS} from "../../constants/labels";
+import {HOME_PAGE_ACTION_TYPES} from "./constants";
+import "../../styles/styles.css"
 
-const Home = () => {
-  const [displayAddExpenseModal, setDisplayAddExpenseModal] = useState(false)
-  const [displayEditExpenseModal, setDisplayEditExpenseModal] = useState(false)
-  const [editValues, setEditValues] = useState(null)
-  const [filter, setFilter] = useState({})
+let Home = () => {
+  const [state, dispatch] = useHomePageState()
+
   const [isDarkMode, toggleDarkMode] = useDarkMode();
   const [keys, setKeys] = useExpenseKeys()
-  const [isEdited, setIsEdited] = useState(false)
   const [, setSortedColumn] = useSortedColumn()
   console.log("rerender Home")
 
@@ -49,7 +48,7 @@ const Home = () => {
 
     // after inserting, reset filters form
     document.getElementById("filter-form").reset();
-    setFilter({})
+    dispatch({ type: HOME_PAGE_ACTION_TYPES.RESET_FILTER })
 
     // after inserting, remove sort
     setSortedColumn(null)
@@ -63,12 +62,11 @@ const Home = () => {
     setKeys(JSON.stringify(allKeysArray))
 
     // close modal
-    setDisplayAddExpenseModal(false)
+    dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_ADD_EXPENSE_MODAL })
   }
 
   const openEditModal = row => {
-    setDisplayEditExpenseModal(true)
-    setEditValues(row)
+    dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_EDIT_EXPENSE_MODAL, editValues: row })
   }
 
   const editExpense = formRef => {
@@ -85,12 +83,12 @@ const Home = () => {
     setSortedColumn(null)
 
     // edit localStorage
-    const key = editValues.key;
+    const key = state.editValues.key;
     localStorage.setItem(key, JSON.stringify({ key, item, date, category, cost}));
 
     // close modal
-    setDisplayEditExpenseModal(false)
-    setIsEdited(true)
+    dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_EDIT_EXPENSE_MODAL })
+    dispatch({ type: HOME_PAGE_ACTION_TYPES.SUBMIT_EDIT_EXPENSE })
   }
 
   return (
@@ -98,20 +96,25 @@ const Home = () => {
       <h1>{LABELS.HOMEPAGE_TITLE}</h1>
       <Button id="toggle-dark-mode-button" type="button" label={BUTTON_LABELS.TOGGLE_DARK_MODE} onClick={toggleDarkMode} />
       <div id="home-actions">
-        <Button id="add-expense-button" type="button" label={BUTTON_LABELS.ADD_EXPENSE} onClick={() => setDisplayAddExpenseModal(true)} />
-        <FilterForm filter={filter} setFilter={setFilter} />
+        <Button
+          id="add-expense-button"
+          type="button"
+          label={BUTTON_LABELS.ADD_EXPENSE}
+          onClick={() => dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_ADD_EXPENSE_MODAL })}
+        />
+        <FilterForm filter={state.filter} dispatch={dispatch} />
       </div>
-      {displayAddExpenseModal
-        ? <Modal isAdd closeModal={() => setDisplayAddExpenseModal(false)} submit={addExpense} />
+      {state.displayAddExpenseModal
+        ? <Modal isAdd closeModal={() => dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_ADD_EXPENSE_MODAL })} submit={addExpense} />
         : <></>
       }
-      {displayEditExpenseModal
-        ? <Modal isAdd={false} values={editValues} closeModal={() => setDisplayEditExpenseModal(false)} submit={editExpense} />
+      {state.displayEditExpenseModal
+        ? <Modal isAdd={false} values={state.editValues} closeModal={() => dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_EDIT_EXPENSE_MODAL })} submit={editExpense} />
         : <></>
       }
-      <ExpenseTable keys={keys} isEdited={isEdited} filter={filter} openEditModal={openEditModal} />
+      <ExpenseTable keys={keys} isEdited={state.isEdited} filter={state.filter} openEditModal={openEditModal} />
     </div>
   )
 }
-
-export default Home
+Home = memo(Home)
+export {Home}

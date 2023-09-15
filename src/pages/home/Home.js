@@ -1,4 +1,4 @@
-import {memo, useEffect} from "react";
+import {memo, useEffect, useMemo} from "react";
 
 import Button from "../../components/button";
 import FilterForm from "../../components/filterForm";
@@ -15,6 +15,18 @@ import {LABELS} from "../../constants/labels";
 import {HOME_PAGE_ACTION_TYPES} from "./constants";
 import "../../styles/styles.css"
 
+function getData(keys) {
+  if (keys === null) {
+    return;
+  }
+  const keysArr = JSON.parse(keys);
+  const allData = []
+  for (const key of keysArr) {
+    allData.push(JSON.parse(localStorage.getItem(key)));
+  }
+  return allData
+}
+
 let Home = () => {
   const [state, dispatch] = useHomePageState()
 
@@ -22,6 +34,7 @@ let Home = () => {
   const [keys, setKeys] = useExpenseKeys()
   const [, setSortedColumn] = useSortedColumn()
   console.log("rerender Home")
+  const data = useMemo(() => getData(keys), [keys, state.isEdited, state.filter])
 
   useEffect(() => {
     const images = document.getElementsByTagName("svg");
@@ -112,7 +125,7 @@ let Home = () => {
         ? <Modal isAdd={false} values={state.editValues} closeModal={() => dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_EDIT_EXPENSE_MODAL })} submit={editExpense} />
         : <></>
       }
-      <ExpenseTable keys={keys} isEdited={state.isEdited} filter={state.filter} openEditModal={openEditModal} />
+      <ExpenseTable data={data} filter={state.filter} openEditModal={openEditModal} />
     </div>
   )
 }

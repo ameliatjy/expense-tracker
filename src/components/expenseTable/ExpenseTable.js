@@ -9,26 +9,9 @@ import useSortedColumn from "../../hooks/useSortedColumn";
 import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
 import "../../styles/styles.css"
 
-function getData(keys) {
-  if (keys === null) {
-    return;
-  }
-  const keysArr = JSON.parse(keys);
-  const allData = []
-  for (const key of keysArr) {
-    allData.push(JSON.parse(localStorage.getItem(key)));
-  }
-  return allData
-}
-function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
-  const [data, setData] = useState(null)
+function ExpenseTable({ data, filter, openEditModal }) {
   const [sortedColumn, setSortedColumn] = useSortedColumn()
   console.log("rerender expensetable")
-
-  useEffect(() => {
-    const allData = getData(keys)
-    setData(allData)
-  }, [keys, isEdited]);
 
   let total = 0
   const [isDarkMode, ] = useDarkMode()
@@ -59,8 +42,6 @@ function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
             <ExpenseTableHeaderCell
               label={label}
               attribute={lowerCaseLabel}
-              data={data}
-              setData={setData}
               onClick={() => setSortedColumn(lowerCaseLabel)}
               sortedColumn={sortedColumn}
             />

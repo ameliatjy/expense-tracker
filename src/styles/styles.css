@@ -84,7 +84,6 @@
 
 .modal-header {
     display: flex;
-    display: flex;
     justify-content: space-between; /* put x and heading on far ends */
 }
 

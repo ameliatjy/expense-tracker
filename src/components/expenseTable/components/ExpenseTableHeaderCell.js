@@ -1,6 +1,8 @@
+import {memo, useState} from "react";
+
 import ArrowUpIcon from "../../../assets/ArrowUpIcon";
 import ArrowDownIcon from "../../../assets/ArrowDownIcon";
-import {memo, useState} from "react";
+
 import {TABLE_LABELS} from "../constants";
 
 let ExpenseTableHeaderCell = ({ label, attribute, data, setData, onClick, sortedColumn }) => {

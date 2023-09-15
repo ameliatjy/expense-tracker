@@ -1,10 +1,13 @@
-import "../../styles/styles.css"
 import {memo, useEffect, useState} from "react";
-import useDarkMode from "../../hooks/useDarkMode";
+
 import ExpenseRow from "./components/ExpenseRow";
 import ExpenseTableHeaderCell from "./components/ExpenseTableHeaderCell";
+
+import useDarkMode from "../../hooks/useDarkMode";
 import useSortedColumn from "../../hooks/useSortedColumn";
+
 import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
+import "../../styles/styles.css"
 
 function getData(keys) {
   if (keys === null) {

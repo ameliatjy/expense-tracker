@@ -1,14 +1,17 @@
+import {useEffect, useState} from "react";
+
 import Button from "../components/button";
-import {LABELS} from "../constants/labels";
 import FilterForm from "../components/filterForm";
 import ExpenseTable from "../components/expenseTable";
-import "../styles/styles.css"
-import {useEffect, useState} from "react";
 import Modal from "../components/modal";
+
 import useDarkMode from "../hooks/useDarkMode";
 import useExpenseKeys from "../hooks/useExpenseKeys";
 import useSortedColumn from "../hooks/useSortedColumn";
+
 import {BUTTON_LABELS} from "../components/button/constants";
+import {LABELS} from "../constants/labels";
+import "../styles/styles.css"
 
 const Home = () => {
   const [displayAddExpenseModal, setDisplayAddExpenseModal] = useState(false)

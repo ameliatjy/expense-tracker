@@ -1,7 +1,9 @@
-import "../../../styles/styles.css"
 import {memo, useState} from "react";
+
 import DateInput from "./DateInput";
+
 import {FORM_LABELS} from "../constants/labels";
+import "../../../styles/styles.css"
 
 let DateRangeField = ({ onDateFromChange, onDateToChange }) => {
   const [dateFrom, setDateFrom] = useState()

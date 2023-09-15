@@ -1,5 +1,6 @@
-import ActionsCell from "./ActionsCell";
 import {memo} from "react";
+
+import ActionsCell from "./ActionsCell";
 
 let ExpenseRow = ({ row, openEditModal }) => {
   return (

@@ -1,13 +1,15 @@
-import {LABELS} from "../../constants/labels";
-import {MONTHS} from "./constants/months";
-import {CATEGORIES} from "../../constants/categories";
+import {memo} from "react";
+
 import SelectField from "../SelectField";
 import DateRangeField from "./components/DateRangeField";
 import Button from "../button";
-import "../../styles/styles.css"
+
 import {BUTTON_LABELS} from "../button/constants";
-import {memo} from "react";
+import {LABELS} from "../../constants/labels";
+import {MONTHS} from "./constants/months";
+import {CATEGORIES} from "../../constants/categories";
 import {FORM_LABELS} from "./constants/labels";
+import "../../styles/styles.css"
 
 let FilterForm = ({ filter, setFilter }) => {
   console.log("rerender filterform")

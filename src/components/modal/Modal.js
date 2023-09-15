@@ -1,12 +1,15 @@
+import {memo, useRef} from "react";
+
 import Button from "../button";
 import InputField from "./components/InputField";
 import SelectField from "../SelectField";
-import {CATEGORIES} from "../../constants/categories";
-import "../../styles/styles.css"
+
 import useDarkMode from "../../hooks/useDarkMode";
-import {memo, useRef} from "react";
+
 import {BUTTON_LABELS} from "../button/constants";
 import {MODAL_LABELS} from "./constants";
+import {CATEGORIES} from "../../constants/categories";
+import "../../styles/styles.css"
 
 let Modal = ({ isAdd, closeModal, submit, values }) => {
   const isControlled = typeof values !== "undefined"

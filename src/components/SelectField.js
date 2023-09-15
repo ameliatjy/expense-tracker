@@ -1,6 +1,7 @@
-import "../styles/styles.css"
-import {LABELS} from "../constants/labels";
 import {memo} from "react";
+
+import {LABELS} from "../constants/labels";
+import "../styles/styles.css"
 
 let SelectField = ({ label, values, selected, isAllAllowed = true, onChange }) => {
 

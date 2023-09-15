@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {ExpenseKeysContext} from "./ExpenseKeysProvider";
+import {ExpenseKeysContext} from "../contexts/ExpenseKeysProvider";
 
 function useExpenseKeys() {
   const context = useContext(ExpenseKeysContext)

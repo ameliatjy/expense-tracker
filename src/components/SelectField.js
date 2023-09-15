@@ -1,13 +1,13 @@
-import "../assets/styles.css"
+import "../styles/styles.css"
 import {LABELS} from "../constants/labels";
 import {memo} from "react";
 
-let SelectField = ({ id, label, values, selected, isAllAllowed = true, onChange }) => {
+let SelectField = ({ label, values, selected, isAllAllowed = true, onChange }) => {
 
   return (
     <label className="filter-label">
       {label}
-      <select id={id} className="select-field" onChange={onChange}>
+      <select className="select-field" onChange={onChange}>
         { isAllAllowed
           ? <option value={LABELS.ALL} selected={selected === undefined}>{LABELS.ALL}</option>
           : <></>

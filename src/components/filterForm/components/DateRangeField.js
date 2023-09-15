@@ -1,7 +1,7 @@
-import {LABELS} from "../constants/labels";
-import "../assets/styles.css"
+import "../../../styles/styles.css"
 import {memo, useState} from "react";
 import DateInput from "./DateInput";
+import {FORM_LABELS} from "../constants/labels";
 
 let DateRangeField = ({ onDateFromChange, onDateToChange }) => {
   const [dateFrom, setDateFrom] = useState()
@@ -9,7 +9,7 @@ let DateRangeField = ({ onDateFromChange, onDateToChange }) => {
 
   return (
     <label className="date-range-label">
-      {LABELS.SELECT_DATE_RANGE}
+      {FORM_LABELS.SELECT_DATE_RANGE}
       <br />
       <DateInput
         max={dateTo}

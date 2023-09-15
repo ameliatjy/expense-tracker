@@ -1,12 +1,21 @@
-import ArrowUpIcon from "../assets/ArrowUpIcon";
-import ArrowDownIcon from "../assets/ArrowDownIcon";
-import {useState} from "react";
+import ArrowUpIcon from "../../../assets/ArrowUpIcon";
+import ArrowDownIcon from "../../../assets/ArrowDownIcon";
+import {memo, useState} from "react";
+import {TABLE_LABELS} from "../constants";
 
-const ExpenseTableHeader = ({ label, attribute, data, setData, onClick, sortedColumn }) => {
+let ExpenseTableHeader = ({ label, attribute, data, setData, onClick, sortedColumn }) => {
   const [isAscending, setIsAscending] = useState(null)
-  const isSortedByColumn = sortedColumn === attribute
   console.log("rerender expensetableheader")
 
+  if (label === TABLE_LABELS.ACTIONS) {
+    return (
+      <th className="actions-column">
+        {label}
+      </th>
+    )
+  }
+
+  const isSortedByColumn = sortedColumn === attribute
   const onHeaderClick = e => {
     let compare;
     if (attribute === "cost") {
@@ -39,5 +48,5 @@ const ExpenseTableHeader = ({ label, attribute, data, setData, onClick, sortedCo
     </th>
   )
 }
-
+ExpenseTableHeader = memo(ExpenseTableHeader)
 export default ExpenseTableHeader

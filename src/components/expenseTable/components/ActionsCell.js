@@ -1,8 +1,9 @@
-import DeleteIcon from "../assets/DeleteIcon";
-import EditIcon from "../assets/EditIcon";
-import useExpenseKeys from "../contexts/useExpenseKeys";
+import DeleteIcon from "../../../assets/DeleteIcon";
+import EditIcon from "../../../assets/EditIcon";
+import useExpenseKeys from "../../../hooks/useExpenseKeys";
+import {memo} from "react";
 
-const ActionsCell = ({ openEditModal, row }) => {
+let ActionsCell = ({ openEditModal, row }) => {
   const [keys, setKeys] = useExpenseKeys()
 
   const deleteRow = () => {
@@ -27,5 +28,5 @@ const ActionsCell = ({ openEditModal, row }) => {
     </td>
   )
 }
-
+ActionsCell = memo(ActionsCell)
 export default ActionsCell

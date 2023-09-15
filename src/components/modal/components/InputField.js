@@ -1,4 +1,4 @@
-import "../assets/styles.css"
+import "../../../styles/styles.css"
 import {memo} from "react";
 
 let InputField = ({ id, label, type, defaultValue }) => {

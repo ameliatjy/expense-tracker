@@ -1,13 +1,14 @@
-import Button from "../components/Button";
+import Button from "../components/button";
 import {LABELS} from "../constants/labels";
-import FilterForm from "../components/FilterForm";
-import ExpenseTable from "../components/ExpenseTable";
-import "../assets/styles.css"
+import FilterForm from "../components/filterForm";
+import ExpenseTable from "../components/expenseTable";
+import "../styles/styles.css"
 import {useEffect, useState} from "react";
-import Modal from "../components/Modal";
-import useDarkMode from "../contexts/useDarkMode";
-import useExpenseKeys from "../contexts/useExpenseKeys";
-import useSortedColumn from "../contexts/useSortedColumn";
+import Modal from "../components/modal";
+import useDarkMode from "../hooks/useDarkMode";
+import useExpenseKeys from "../hooks/useExpenseKeys";
+import useSortedColumn from "../hooks/useSortedColumn";
+import {BUTTON_LABELS} from "../components/button/constants";
 
 const Home = () => {
   const [displayAddExpenseModal, setDisplayAddExpenseModal] = useState(false)
@@ -92,9 +93,9 @@ const Home = () => {
   return (
     <div id="home-container">
       <h1>{LABELS.HOMEPAGE_TITLE}</h1>
-      <Button id="toggle-dark-mode-button" type="button" label={LABELS.TOGGLE_DARK_MODE} onClick={toggleDarkMode} />
+      <Button id="toggle-dark-mode-button" type="button" label={BUTTON_LABELS.TOGGLE_DARK_MODE} onClick={toggleDarkMode} />
       <div id="home-actions">
-        <Button id="add-expense-button" type="button" label={LABELS.ADD_EXPENSE} onClick={() => setDisplayAddExpenseModal(true)} />
+        <Button id="add-expense-button" type="button" label={BUTTON_LABELS.ADD_EXPENSE} onClick={() => setDisplayAddExpenseModal(true)} />
         <FilterForm filter={filter} setFilter={setFilter} />
       </div>
       {displayAddExpenseModal

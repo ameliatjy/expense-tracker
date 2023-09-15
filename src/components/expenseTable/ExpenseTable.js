@@ -1,10 +1,10 @@
-import {LABELS} from "../constants/labels";
-import "../assets/styles.css"
+import "../../styles/styles.css"
 import {memo, useEffect, useState} from "react";
-import useDarkMode from "../contexts/useDarkMode";
-import ExpenseRow from "./ExpenseRow";
-import ExpenseTableHeader from "./ExpenseTableHeader";
-import useSortedColumn from "../contexts/useSortedColumn";
+import useDarkMode from "../../hooks/useDarkMode";
+import ExpenseRow from "./components/ExpenseRow";
+import ExpenseTableHeader from "./components/ExpenseTableHeader";
+import useSortedColumn from "../../hooks/useSortedColumn";
+import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
 
 function getData(keys) {
   if (keys === null) {
@@ -23,14 +23,7 @@ function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
   console.log("rerender expensetable")
 
   useEffect(() => {
-    if (keys === null) {
-      return;
-    }
-    const keysArr = JSON.parse(keys);
-    const allData = []
-    for (const key of keysArr) {
-      allData.push(JSON.parse(localStorage.getItem(key)));
-    }
+    const allData = getData(keys)
     setData(allData)
   }, [isEdited]);
 
@@ -57,41 +50,19 @@ function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
     <table className="expenses-table">
       <thead className={isDarkMode ? "dark-mode-thead-tfoot" : ""}>
       <tr>
-        <ExpenseTableHeader
-          label={LABELS.ITEM}
-          attribute="item"
-          data={data}
-          setData={setData}
-          onClick={() => setSortedColumn("item")}
-          sortedColumn={sortedColumn}
-        />
-        <ExpenseTableHeader
-          label={LABELS.DATE}
-          attribute="date"
-          data={data}
-          setData={setData}
-          onClick={() => setSortedColumn("date")}
-          sortedColumn={sortedColumn}
-        />
-        <ExpenseTableHeader
-          label={LABELS.CATEGORY}
-          attribute="category"
-          data={data}
-          setData={setData}
-          onClick={() => setSortedColumn("category")}
-          sortedColumn={sortedColumn}
-        />
-        <ExpenseTableHeader
-          label={LABELS.COST}
-          attribute="cost"
-          data={data}
-          setData={setData}
-          onClick={() => setSortedColumn("cost")}
-          sortedColumn={sortedColumn}
-        />
-        <th className="actions-column">
-          {LABELS.ACTIONS}
-        </th>
+        {TABLE_HEADERS.map(label => {
+          const lowerCaseLabel = label.toLowerCase()
+          return (
+            <ExpenseTableHeader
+              label={label}
+              attribute={lowerCaseLabel}
+              data={data}
+              setData={setData}
+              onClick={() => setSortedColumn(lowerCaseLabel)}
+              sortedColumn={sortedColumn}
+            />
+          )
+        })}
       </tr>
       </thead>
       <tbody>
@@ -108,7 +79,7 @@ function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
       <tr>
         <td></td>
         <td></td>
-        <td>{LABELS.TOTAL}</td>
+        <td>{TABLE_LABELS.TOTAL}</td>
         <td>{`$${total.toFixed(2)}`}</td>
         <td></td>
       </tr>
@@ -117,4 +88,4 @@ function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
   )
 }
 ExpenseTable = memo(ExpenseTable)
-export default ExpenseTable
+export {ExpenseTable}

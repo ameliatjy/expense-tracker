@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {SortedColumnContext} from "./SortedColumnProvider";
+import {SortedColumnContext} from "../contexts/SortedColumnProvider";
 
 function useSortedColumn() {
   const context = useContext(SortedColumnContext)

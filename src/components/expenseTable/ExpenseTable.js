@@ -9,7 +9,7 @@ import useSortedColumn from "../../hooks/useSortedColumn";
 import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
 import "../../styles/styles.css"
 
-let ExpenseTable = ({ data, setData, filter, openEditModal }) => {
+let ExpenseTable = ({ data, dispatch, filter, openEditModal }) => {
   const [sortedColumn, setSortedColumn] = useSortedColumn()
   console.log("rerender expensetable")
 
@@ -42,8 +42,7 @@ let ExpenseTable = ({ data, setData, filter, openEditModal }) => {
             <ExpenseTableHeaderCell
               label={label}
               attribute={lowerCaseLabel}
-              data={data}
-              setData={setData}
+              dispatch={dispatch}
               onClick={() => setSortedColumn(lowerCaseLabel)}
               sortedColumn={sortedColumn}
             />

@@ -4,8 +4,9 @@ import ArrowUpIcon from "../../../assets/ArrowUpIcon";
 import ArrowDownIcon from "../../../assets/ArrowDownIcon";
 
 import {TABLE_LABELS} from "../constants";
+import {HOME_PAGE_ACTION_TYPES} from "../../../pages/home/constants";
 
-let ExpenseTableHeaderCell = ({ label, attribute, data, setData, onClick, sortedColumn }) => {
+let ExpenseTableHeaderCell = ({ label, attribute, dispatch, onClick, sortedColumn }) => {
   const [isAscending, setIsAscending] = useState(null)
   console.log("rerender expensetableheader")
 
@@ -37,7 +38,7 @@ let ExpenseTableHeaderCell = ({ label, attribute, data, setData, onClick, sorted
         );
       }
     }
-    setData(data.toSorted(compare))
+    dispatch({ type: HOME_PAGE_ACTION_TYPES.SORT_TABLE, sortFn: compare })
     setIsAscending(a => a === null ? true : !a)
     onClick()
   }

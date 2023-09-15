@@ -21,14 +21,14 @@ function getData(keys) {
   return allData
 }
 function ExpenseTable({ keys, isEdited, filter, openEditModal }) {
-  const [data, setData] = useState(() => getData(keys))
+  const [data, setData] = useState(null)
   const [sortedColumn, setSortedColumn] = useSortedColumn()
   console.log("rerender expensetable")
 
   useEffect(() => {
     const allData = getData(keys)
     setData(allData)
-  }, [isEdited]);
+  }, [keys, isEdited]);
 
   let total = 0
   const [isDarkMode, ] = useDarkMode()

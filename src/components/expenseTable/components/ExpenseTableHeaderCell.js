@@ -5,7 +5,7 @@ import ArrowDownIcon from "../../../assets/ArrowDownIcon";
 
 import {TABLE_LABELS} from "../constants";
 
-let ExpenseTableHeaderCell = ({ label, attribute, onClick, sortedColumn }) => {
+let ExpenseTableHeaderCell = ({ label, attribute, data, setData, onClick, sortedColumn }) => {
   const [isAscending, setIsAscending] = useState(null)
   console.log("rerender expensetableheader")
 
@@ -37,6 +37,7 @@ let ExpenseTableHeaderCell = ({ label, attribute, onClick, sortedColumn }) => {
         );
       }
     }
+    setData(data.toSorted(compare))
     setIsAscending(a => a === null ? true : !a)
     onClick()
   }

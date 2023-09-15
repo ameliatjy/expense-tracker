@@ -1,4 +1,4 @@
-import {memo, useEffect, useState} from "react";
+import {memo} from "react";
 
 import ExpenseRow from "./components/ExpenseRow";
 import ExpenseTableHeaderCell from "./components/ExpenseTableHeaderCell";
@@ -9,7 +9,7 @@ import useSortedColumn from "../../hooks/useSortedColumn";
 import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
 import "../../styles/styles.css"
 
-function ExpenseTable({ data, filter, openEditModal }) {
+let ExpenseTable = ({ data, setData, filter, openEditModal }) => {
   const [sortedColumn, setSortedColumn] = useSortedColumn()
   console.log("rerender expensetable")
 
@@ -42,6 +42,8 @@ function ExpenseTable({ data, filter, openEditModal }) {
             <ExpenseTableHeaderCell
               label={label}
               attribute={lowerCaseLabel}
+              data={data}
+              setData={setData}
               onClick={() => setSortedColumn(lowerCaseLabel)}
               sortedColumn={sortedColumn}
             />

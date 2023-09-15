@@ -22,8 +22,10 @@ let homePageReducer = (state, action) => {
       const { [action.fieldName]: a, ...others } = state.filter
       return { ...state, filter: others }
     }
+    default: {
+      throw Error('Unknown action: ' + action.type)
+    }
   }
-  throw Error('Unknown action: ' + action.type)
 }
 
 let useHomePageState = () => {

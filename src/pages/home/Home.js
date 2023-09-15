@@ -1,4 +1,4 @@
-import {memo, useEffect, useMemo} from "react";
+import {memo, useEffect, useState} from "react";
 
 import Button from "../../components/button";
 import FilterForm from "../../components/filterForm";
@@ -34,7 +34,11 @@ let Home = () => {
   const [keys, setKeys] = useExpenseKeys()
   const [, setSortedColumn] = useSortedColumn()
   console.log("rerender Home")
-  const data = useMemo(() => getData(keys), [keys, state.isEdited, state.filter])
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    setData(getData(keys))
+  }, [keys, state.isEdited, state.filter]);
 
   useEffect(() => {
     const images = document.getElementsByTagName("svg");
@@ -125,7 +129,7 @@ let Home = () => {
         ? <Modal isAdd={false} values={state.editValues} closeModal={() => dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_EDIT_EXPENSE_MODAL })} submit={editExpense} />
         : <></>
       }
-      <ExpenseTable data={data} filter={state.filter} openEditModal={openEditModal} />
+      <ExpenseTable data={data} setData={setData} filter={state.filter} openEditModal={openEditModal} />
     </div>
   )
 }

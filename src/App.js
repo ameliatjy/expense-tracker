@@ -2,7 +2,6 @@ import Home from "./pages/home";
 
 import DarkModeProvider from "./contexts/DarkModeProvider";
 import ExpenseKeysProvider from "./contexts/ExpenseKeysProvider";
-import SortedColumnProvider from "./contexts/SortedColumnProvider";
 
 import './App.css';
 
@@ -11,9 +10,7 @@ function App() {
     <div className="App">
       <DarkModeProvider>
         <ExpenseKeysProvider>
-          <SortedColumnProvider>
-            <Home />
-          </SortedColumnProvider>
+          <Home />
         </ExpenseKeysProvider>
       </DarkModeProvider>
     </div>

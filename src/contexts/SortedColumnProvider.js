@@ -3,7 +3,7 @@ import {createContext, useState} from "react";
 export const SortedColumnContext = createContext()
 
 const SortedColumnProvider = (props) => {
-  const [sortedColumn, setSortedColumn] = useState(null)
+  const [sortedColumn, setSortedColumn] = useState({}) // {column: "cost, sortFn: compare}
 
   return (
     <SortedColumnContext.Provider value={[sortedColumn, setSortedColumn]} {...props} />

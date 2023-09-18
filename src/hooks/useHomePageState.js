@@ -22,9 +22,6 @@ let homePageReducer = (state, action) => {
       const { [action.fieldName]: a, ...others } = state.filter
       return { ...state, filter: others }
     }
-    case HOME_PAGE_ACTION_TYPES.SORT_TABLE: {
-      return { ...state, sortFn: action.sortFn }
-    }
     default: {
       throw Error('Unknown action: ' + action.type)
     }
@@ -38,7 +35,6 @@ let useHomePageState = () => {
     editValues: null,
     filter: {},
     isEdited: false,
-    sortFn: null
   })
   return [state, reducer]
 }

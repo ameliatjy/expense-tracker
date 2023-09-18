@@ -1,4 +1,4 @@
-import {memo} from "react";
+import {memo, useEffect, useState} from "react";
 
 import ExpenseRow from "./components/ExpenseRow";
 import ExpenseTableHeaderCell from "./components/ExpenseTableHeaderCell";
@@ -9,8 +9,18 @@ import useSortedColumn from "../../hooks/useSortedColumn";
 import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
 import "../../styles/styles.css"
 
-let ExpenseTable = ({ data, dispatch, filter, openEditModal }) => {
+let ExpenseTable = ({ data, filter, openEditModal }) => {
+  const [tableData, setTableData] = useState(null)
   const [sortedColumn, setSortedColumn] = useSortedColumn()
+
+  useEffect(() => {
+    if (sortedColumn.sortFn !== null) {
+      setTableData(data.toSorted(sortedColumn.sortFn))
+    } else {
+      setTableData(data)
+    }
+  }, [data, sortedColumn]);
+
   console.log("rerender expensetable")
 
   let total = 0
@@ -43,16 +53,15 @@ let ExpenseTable = ({ data, dispatch, filter, openEditModal }) => {
               key={label}
               label={label}
               attribute={lowerCaseLabel}
-              dispatch={dispatch}
-              onClick={() => setSortedColumn(lowerCaseLabel)}
-              sortedColumn={sortedColumn}
+              setSortedColumn={setSortedColumn}
+              sortedColumn={sortedColumn.column}
             />
           )
         })}
       </tr>
       </thead>
       <tbody>
-        {data?.map(row => {
+        {tableData?.map(row => {
           if (shouldDisplayRow(row)) {
             total += Number(row.cost)
             return (

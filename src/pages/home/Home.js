@@ -4,10 +4,10 @@ import Button from "../../components/button";
 import FilterForm from "../../components/filterForm";
 import ExpenseTable from "../../components/expenseTable";
 import Modal from "../../components/modal";
+import SortedColumnProvider from "../../contexts/SortedColumnProvider";
 
 import useDarkMode from "../../hooks/useDarkMode";
 import useExpenseKeys from "../../hooks/useExpenseKeys";
-import useSortedColumn from "../../hooks/useSortedColumn";
 import useHomePageState from "../../hooks/useHomePageState";
 
 import {BUTTON_LABELS} from "../../components/button/constants";
@@ -32,7 +32,6 @@ let Home = () => {
 
   const [isDarkMode, toggleDarkMode] = useDarkMode();
   const [keys, setKeys] = useExpenseKeys()
-  const [, setSortedColumn] = useSortedColumn()
   console.log("rerender Home")
   const data = useMemo(() => getData(keys), [keys, state.isEdited, state.filter])
 
@@ -63,9 +62,6 @@ let Home = () => {
     document.getElementById("filter-form").reset();
     dispatch({ type: HOME_PAGE_ACTION_TYPES.RESET_FILTER })
 
-    // after inserting, remove sort
-    setSortedColumn(null)
-
     // add expense to localStorage
     localStorage.setItem(key, JSON.stringify({ key, item, date, category, cost }));
 
@@ -91,9 +87,6 @@ let Home = () => {
       alert("All fields are required!")
       return;
     }
-
-    // after editing, remove sort
-    setSortedColumn(null)
 
     // edit localStorage
     const key = state.editValues.key;
@@ -125,7 +118,9 @@ let Home = () => {
         ? <Modal isAdd={false} values={state.editValues} closeModal={() => dispatch({ type: HOME_PAGE_ACTION_TYPES.TOGGLE_EDIT_EXPENSE_MODAL })} submit={editExpense} />
         : <></>
       }
-      <ExpenseTable data={state.sortFn === null ? data : data.toSorted(state.sortFn)} dispatch={dispatch} filter={state.filter} openEditModal={openEditModal} />
+      <SortedColumnProvider>
+        <ExpenseTable data={data} filter={state.filter} openEditModal={openEditModal} />
+      </SortedColumnProvider>
     </div>
   )
 }

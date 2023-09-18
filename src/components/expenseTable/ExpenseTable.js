@@ -1,4 +1,4 @@
-import {memo, useEffect, useState} from "react";
+import {memo, useMemo} from "react";
 
 import ExpenseRow from "./components/ExpenseRow";
 import ExpenseTableHeaderCell from "./components/ExpenseTableHeaderCell";
@@ -10,16 +10,14 @@ import {TABLE_HEADERS, TABLE_LABELS} from "./constants";
 import "../../styles/styles.css"
 
 let ExpenseTable = ({ data, filter, openEditModal }) => {
-  const [tableData, setTableData] = useState(null)
   const [sortedColumn, setSortedColumn] = useSortedColumn()
-
-  useEffect(() => {
+  const tableData = useMemo(() => {
     if (sortedColumn.sortFn !== null) {
-      setTableData(data.toSorted(sortedColumn.sortFn))
+      return data.toSorted(sortedColumn.sortFn)
     } else {
-      setTableData(data)
+      return data
     }
-  }, [data, sortedColumn]);
+  }, [data, sortedColumn])
 
   console.log("rerender expensetable")
 

@@ -1,8 +1,9 @@
-#main-container {
+#home-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 30px;
 }
 
 #toggle-dark-mode-button {
@@ -11,13 +12,13 @@
     right: 20px;
 }
 
-#expenses-table {
+.expenses-table {
     width: 80%;
     border: 2px solid black;
     border-collapse: collapse; /* no double borders */
 }
 
-.actions {
+#home-actions {
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -39,7 +40,7 @@
     width: 200px;
 }
 
-#select-month, #select-category {
+.select-field {
     width: 200px;
 }
 
@@ -51,15 +52,18 @@
     width: 110px;
 }
 
-#clear-filters-button {
+.clear-filters-button {
     height: 50%;
     visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
 }
 
 
 /* modal */
 .modal {
-    display: none;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
@@ -84,7 +88,7 @@
     justify-content: space-between; /* put x and heading on far ends */
 }
 
-form#add-expense-form, form#edit-expense-form {
+.modal-form {
     display: flex;
     align-items: center; /* centralise form */
     flex-direction: column;
